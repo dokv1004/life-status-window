@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
-import { User, Friend, FriendRequest } from '@/types/user';
+import { User, FriendRequest } from '@/types/user';
 import { Copy, Check, UserPlus, Users, Bell, Pencil, X, LogOut } from 'lucide-react';
+import PageLoading from '@/components/PageLoading';
 
 // 랜덤 친구 코드 생성 함수
 function generateFriendCode(): string {
@@ -183,11 +184,7 @@ export default function ProfilePage() {
   };
 
   if (loading) {
-    return (
-      <main className="min-h-screen md:min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 flex items-center justify-center p-4 pb-20 md:pb-4">
-        <div className="text-blue-600 text-xl animate-pulse">프로필을 불러오는 중...</div>
-      </main>
-    );
+    return <PageLoading message="프로필을 불러오는 중..." />;
   }
 
   if (!user) return null;

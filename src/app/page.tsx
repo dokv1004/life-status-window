@@ -2,16 +2,13 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import { Sparkles, ArrowUp, ArrowDown } from 'lucide-react';
+import PageLoading from '@/components/PageLoading';
 
 export default function Home() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return (
-      <main className="flex flex-col items-center justify-center min-h-screen md:min-h-[calc(100vh-4rem)] p-4 pb-20 md:pb-4 bg-linear-to-b from-white to-blue-50">
-        <div className="text-blue-600 text-xl animate-pulse">Loading...</div>
-      </main>
-    );
+    return <PageLoading />;
   }
 
   return (

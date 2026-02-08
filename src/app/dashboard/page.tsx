@@ -9,6 +9,7 @@ import { User } from '@/types/user';
 import StatusPanel from '@/components/StatusPanel';
 import ActionForm from '@/components/ActionForm';
 import ResultModal from '@/components/ResultModal';
+import PageLoading from '@/components/PageLoading';
 
 interface ApiResponse {
   success: boolean;
@@ -84,11 +85,7 @@ export default function Dashboard() {
   };
 
   if (loading) {
-    return (
-      <main className="min-h-screen md:min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 flex items-center justify-center p-4 pb-20 md:pb-4">
-        <div className="text-blue-600 text-xl animate-pulse">상태창을 불러오는 중...</div>
-      </main>
-    );
+    return <PageLoading message="상태창을 불러오는 중..." />;
   }
 
   if (!user) return null;
