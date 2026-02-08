@@ -7,7 +7,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import { User, FriendRequest } from '@/types/user';
 import { Copy, Check, UserPlus, Users, Bell, Pencil, X, LogOut } from 'lucide-react';
-import PageLoading from '@/components/PageLoading';
+import ProfileSkeleton from '@/components/ProfileSkeleton';
 
 // 랜덤 친구 코드 생성 함수
 function generateFriendCode(): string {
@@ -209,7 +209,7 @@ export default function ProfilePage() {
   };
 
   if (loading) {
-    return <PageLoading message="프로필을 불러오는 중..." />;
+    return <ProfileSkeleton />;
   }
 
   if (!user) return null;

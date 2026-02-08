@@ -9,7 +9,7 @@ import { User } from '@/types/user';
 import StatusPanel from '@/components/StatusPanel';
 import ActionForm from '@/components/ActionForm';
 import ResultModal from '@/components/ResultModal';
-import PageLoading from '@/components/PageLoading';
+import DashboardSkeleton from '@/components/DashboardSkeleton';
 
 interface ApiResponse {
   success: boolean;
@@ -85,7 +85,7 @@ export default function Dashboard() {
   };
 
   if (loading) {
-    return <PageLoading message="상태창을 불러오는 중..." />;
+    return <DashboardSkeleton />;
   }
 
   if (!user) return null;

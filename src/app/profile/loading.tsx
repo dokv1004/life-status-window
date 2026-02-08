@@ -1,5 +1,5 @@
-import PageLoading from '@/components/PageLoading';
+import ProfileSkeleton from '@/components/ProfileSkeleton';
 
 export default function Loading() {
-  return <PageLoading message="프로필을 불러오는 중..." />;
+  return <ProfileSkeleton />;
 }
