@@ -16,19 +16,35 @@
 html {
   background: linear-gradient(to bottom, #ffffff, #eff6ff);
   color: #1e293b;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
   overscroll-behavior: none;
 }
 
 body {
   background: linear-gradient(to bottom, #ffffff, #eff6ff);
   color: #1e293b;
-  height: 100%;
-  overflow: auto;
-  overscroll-behavior-x: none;
-  overscroll-behavior-y: auto;
+  min-height: 100%;
   -webkit-overflow-scrolling: touch;
+}
+
+/* 모바일: pull-to-refresh 허용 */
+@media (max-width: 767px) {
+  html, body {
+    overscroll-behavior-y: auto;
+  }
+}
+
+/* 데스크톱: 바운싱 완전 차단 */
+@media (min-width: 768px) {
+  html {
+    height: 100%;
+    overflow: hidden;
+  }
+  body {
+    height: 100%;
+    overflow: auto;
+    overscroll-behavior: none;
+  }
 }
 
 /* Smooth transitions for mobile nav */
