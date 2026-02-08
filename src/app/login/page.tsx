@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import LoginSkeleton from '@/components/LoginSkeleton';
+import { motion } from 'framer-motion';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -35,7 +36,12 @@ export default function LoginPage() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen md:min-h-[calc(100vh-4rem)] p-4 pb-20 md:pb-4 bg-gray-50/50">
       {/* 로그인 카드 */}
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <motion.div
+        className="w-full max-w-md bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         {/* 헤더 */}
         <div className="p-8 text-center space-y-2">
           <h1 className="text-2xl font-bold text-blue-900">
@@ -75,12 +81,17 @@ export default function LoginPage() {
             Google로 계속하기
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* 하단 약관 문구 */}
-      <p className="mt-6 text-xs text-gray-400 text-center animate-in fade-in slide-in-from-bottom-4 duration-1000">
+      <motion.p
+        className="mt-6 text-xs text-gray-400 text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         로그인 시 이용약관 및 개인정보처리방침에 동의하게 됩니다.
-      </p>
+      </motion.p>
     </main>
   );
 }
