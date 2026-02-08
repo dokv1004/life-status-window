@@ -91,7 +91,7 @@ export default function ResultModal({ result, onClose }: ResultModalProps) {
           className={`p-6 relative ${
             result.leveledUp
               ? 'bg-linear-to-r from-yellow-50 to-orange-50'
-              : 'bg-linear-to-r from-blue-50 to-purple-50'
+              : 'bg-linear-to-r from-blue-50 to-blue-100'
           }`}
         >
           <button
@@ -146,7 +146,7 @@ export default function ResultModal({ result, onClose }: ResultModalProps) {
 
         {/* AI 코멘트 */}
         <div className="px-6 pb-6">
-          <div className="bg-purple-50 border border-purple-100 rounded-lg p-4">
+          <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
             <p className="text-gray-700 text-sm italic">"{result.result.comment}"</p>
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function ResultModal({ result, onClose }: ResultModalProps) {
         <div className="px-6 pb-6">
           <button
             onClick={onClose}
-            className="w-full py-3 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all active:scale-[0.98]"
+            className="w-full py-3 bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold rounded-lg transition-all active:scale-[0.98]"
           >
             확인
           </button>

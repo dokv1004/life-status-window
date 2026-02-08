@@ -65,7 +65,7 @@ export default function ActionForm({ uid, onResult }: ActionFormProps) {
 
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-      <div className="p-6 border-b border-gray-100 bg-linear-to-r from-purple-50 to-blue-50">
+      <div className="p-6 border-b border-gray-100 bg-linear-to-r from-blue-50 to-blue-100">
         <h3 className="text-lg font-bold text-gray-800">수련 기록</h3>
         <p className="text-gray-500 text-sm mt-1">
           오늘 한 행동을 기록하면 AI가 스탯으로 변환해드려요
@@ -84,7 +84,7 @@ export default function ActionForm({ uid, onResult }: ActionFormProps) {
         <button
           type="submit"
           disabled={loading || !content.trim()}
-          className="w-full mt-4 py-3 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
+          className="w-full mt-4 py-3 bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
         >
           {loading ? (
             <>
@@ -103,8 +103,8 @@ export default function ActionForm({ uid, onResult }: ActionFormProps) {
       {/* 로딩 상태 */}
       {loading && (
         <div className="px-6 pb-6">
-          <div className="bg-purple-50 border border-purple-100 rounded-lg p-4 text-center">
-            <p className="text-purple-600 text-sm animate-pulse">
+          <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 text-center">
+            <p className="text-blue-600 text-sm animate-pulse">
               AI가 행동을 분석하고 있어요...
             </p>
           </div>

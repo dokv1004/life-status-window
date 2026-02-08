@@ -27,20 +27,20 @@ export default function StatusChart({ stats }: StatusChartProps) {
         <PolarRadiusAxis
           angle={90}
           domain={[0, 100]}
-          tick={{ fill: '#94a3b8', fontSize: 11 }}
+          tick={false}
         />
         <Radar
           name="Stats"
           dataKey="value"
-          stroke="#8b5cf6"
+          stroke="#3b82f6"
           fill="url(#statGradient)"
           fillOpacity={0.6}
           strokeWidth={2}
         />
         <defs>
           <linearGradient id="statGradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#3b82f6" />
-            <stop offset="100%" stopColor="#8b5cf6" />
+            <stop offset="0%" stopColor="#60a5fa" />
+            <stop offset="100%" stopColor="#2563eb" />
           </linearGradient>
         </defs>
       </RadarChart>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { Home, ChartNoAxesCombined, UserCircle, LogOut, LucideIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -96,9 +97,22 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             {user ? (
               <>
-                <span className="text-gray-500 text-sm hidden lg:block">
-                  {user.displayName || user.email}
-                </span>
+                <div className="hidden lg:flex items-center gap-2">
+                  {user.photoURL ? (
+                    <Image
+                      src={user.photoURL}
+                      alt="프로필"
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <UserCircle size={32} className="text-gray-400" />
+                  )}
+                  <span className="text-gray-700 text-sm font-semibold">
+                    {user.displayName || user.email}
+                  </span>
+                </div>
                 <button
                   onClick={handleLogout}
                   className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"

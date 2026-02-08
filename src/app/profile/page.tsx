@@ -223,7 +223,7 @@ export default function ProfilePage() {
       <div className="max-w-lg mx-auto space-y-6">
         {/* 헤더 */}
         <div className="text-center">
-          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">
+          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-500 to-blue-700">
             프로필
           </h1>
         </div>

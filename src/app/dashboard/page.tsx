@@ -95,7 +95,7 @@ export default function Dashboard() {
       <div className="max-w-4xl mx-auto">
         {/* 헤더 */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">
+          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-500 to-blue-700">
             상태창
           </h1>
           <p className="text-gray-500 mt-2">당신의 성장을 확인하세요</p>
