@@ -6,7 +6,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import { User, Friend, FriendRequest } from '@/types/user';
-import { Copy, Check, UserPlus, Users, Bell, Pencil, X } from 'lucide-react';
+import { Copy, Check, UserPlus, Users, Bell, Pencil, X, LogOut } from 'lucide-react';
 
 // 랜덤 친구 코드 생성 함수
 function generateFriendCode(): string {
@@ -177,9 +177,14 @@ export default function ProfilePage() {
     }
   };
 
+  const handleLogout = async () => {
+    await auth.signOut();
+    router.push('/');
+  };
+
   if (loading) {
     return (
-      <main className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 flex items-center justify-center p-4">
+      <main className="min-h-screen md:min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 flex items-center justify-center p-4 pb-20 md:pb-4">
         <div className="text-blue-600 text-xl animate-pulse">프로필을 불러오는 중...</div>
       </main>
     );
@@ -192,7 +197,7 @@ export default function ProfilePage() {
   const friends = user.friends || [];
 
   return (
-    <main className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 py-8 px-4 pb-24">
+    <main className="min-h-screen md:min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 py-6 md:py-8 px-4 pb-24 md:pb-8">
       <div className="max-w-lg mx-auto space-y-6">
         {/* 헤더 */}
         <div className="text-center">
@@ -298,7 +303,7 @@ export default function ProfilePage() {
             <button
               onClick={handleAddFriend}
               disabled={addingFriend || friendCodeInput.length !== 6}
-              className="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="shrink-0 px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
             >
               {addingFriend ? '...' : '추가'}
             </button>
@@ -345,7 +350,7 @@ export default function ProfilePage() {
           </div>
 
           {/* 탭 컨텐츠 */}
-          <div className="p-4 min-h-[200px]">
+          <div className="p-4 min-h-70">
             {activeTab === 'friends' ? (
               friends.length > 0 ? (
                 <div className="space-y-3">
@@ -453,6 +458,15 @@ export default function ProfilePage() {
             )}
           </div>
         </div>
+
+        {/* 모바일 로그아웃 버튼 */}
+        <button
+          onClick={handleLogout}
+          className="md:hidden w-full py-3 bg-gray-100 hover:bg-red-50 text-gray-600 hover:text-red-500 font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+        >
+          <LogOut size={20} />
+          로그아웃
+        </button>
       </div>
     </main>
   );

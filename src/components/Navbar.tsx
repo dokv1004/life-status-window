@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ChartNoAxesCombined, UserCircle, LogIn, LogOut, LucideIcon } from 'lucide-react';
+import { Home, ChartNoAxesCombined, UserCircle, LogOut, LucideIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
@@ -13,7 +13,15 @@ type NavItemData = {
   icon: LucideIcon;
 };
 
-const navItems: NavItemData[] = [
+// 데스크톱용 네비 아이템
+const desktopNavItems: NavItemData[] = [
+  { name: '상태창', href: '/dashboard', icon: ChartNoAxesCombined },
+  { name: '프로필', href: '/profile', icon: UserCircle },
+];
+
+// 모바일용 네비 아이템 (홈 포함)
+const mobileNavItems: NavItemData[] = [
+  { name: '홈', href: '/', icon: Home },
   { name: '상태창', href: '/dashboard', icon: ChartNoAxesCombined },
   { name: '프로필', href: '/profile', icon: UserCircle },
 ];
@@ -75,7 +83,7 @@ export default function Navbar() {
 
           {/* 중앙 메뉴 */}
           <nav className="absolute left-1/2 -translate-x-1/2 flex gap-1">
-            {navItems.map((item) => (
+            {desktopNavItems.map((item) => (
               <NavItem
                 key={item.href}
                 item={item}
@@ -114,7 +122,7 @@ export default function Navbar() {
       {/* Mobile Bottom Nav */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-gray-200 h-16 md:hidden pb-safe">
         <div className="flex justify-around items-center h-full px-2 max-w-md mx-auto">
-          {navItems.map((item) => {
+          {mobileNavItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
@@ -134,33 +142,11 @@ export default function Navbar() {
               </Link>
             );
           })}
-
-          {/* 모바일 로그인/로그아웃 버튼 */}
-          {user ? (
-            <button
-              onClick={handleLogout}
-              className="flex-1 flex flex-col items-center justify-center py-2 mx-1 rounded-xl text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors duration-200"
-            >
-              <LogOut size={24} strokeWidth={2} />
-              <span className="text-[10px] font-medium mt-0.5">로그아웃</span>
-            </button>
-          ) : (
-            <Link
-              href="/login"
-              className="flex-1 flex flex-col items-center justify-center py-2 mx-1 rounded-xl text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-colors duration-200"
-            >
-              <LogIn size={24} strokeWidth={2} />
-              <span className="text-[10px] font-medium mt-0.5">로그인</span>
-            </Link>
-          )}
         </div>
       </nav>
 
-      {/* Spacer for desktop */}
+      {/* Spacer for desktop (top navbar) */}
       <div className="hidden md:block h-16" />
-
-      {/* Spacer for mobile */}
-      <div className="md:hidden h-16" />
     </>
   );
 }

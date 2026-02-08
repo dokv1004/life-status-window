@@ -8,28 +8,27 @@ export default function Home() {
 
   if (loading) {
     return (
-      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4 bg-linear-to-b from-white to-blue-50">
+      <main className="flex flex-col items-center justify-center min-h-screen md:min-h-[calc(100vh-4rem)] p-4 pb-20 md:pb-4 bg-linear-to-b from-white to-blue-50">
         <div className="text-blue-600 text-xl animate-pulse">Loading...</div>
       </main>
     );
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4 bg-linear-to-b from-white to-blue-50 cursor-default select-none">
+    <main className="flex flex-col items-center justify-center min-h-screen md:min-h-[calc(100vh-4rem)] p-4 pb-20 md:pb-4 bg-linear-to-b from-white to-blue-50 cursor-default select-none">
       {/* 타이틀 및 소개 영역 */}
       <div className="text-center space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
         {/* 메인 타이틀 */}
-        <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600 tracking-tighter flex items-center justify-center gap-4 drop-shadow-sm">
-          <span className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
-            ISEKAI
-            <span className="hidden md:inline"> </span>
-            STATUS!
-          </span>
+        <div className="flex items-center justify-center gap-4">
+          <h1 className="text-5xl md:text-8xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600 tracking-tighter text-center drop-shadow-sm">
+            <span className="block md:inline">ISEKAI</span>
+            <span className="block md:inline"> STATUS!</span>
+          </h1>
           <Sparkles
             className="text-yellow-400 animate-pulse hidden md:block"
             size={64}
           />
-        </h1>
+        </div>
 
         {/* 서브 타이틀 */}
         <p className="text-xl md:text-2xl text-gray-500 font-medium max-w-lg mx-auto leading-relaxed">

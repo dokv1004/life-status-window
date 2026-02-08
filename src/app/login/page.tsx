@@ -32,7 +32,7 @@ export default function LoginPage() {
   // 로딩 스켈레톤
   if (loading) {
     return (
-      <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4 bg-gray-50/50">
+      <main className="flex flex-col items-center justify-center min-h-screen md:min-h-[calc(100vh-4rem)] p-4 pb-20 md:pb-4 bg-gray-50/50">
         <div className="w-full max-w-md mb-4">
           <Link
             href="/"
@@ -60,7 +60,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4 bg-gray-50/50">
+    <main className="flex flex-col items-center justify-center min-h-screen md:min-h-[calc(100vh-4rem)] p-4 pb-20 md:pb-4 bg-gray-50/50">
       {/* 뒤로가기 버튼 */}
       <div className="w-full max-w-md mb-4">
         <Link

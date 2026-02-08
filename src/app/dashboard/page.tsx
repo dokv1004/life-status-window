@@ -85,7 +85,7 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <main className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 flex items-center justify-center p-4">
+      <main className="min-h-screen md:min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 flex items-center justify-center p-4 pb-20 md:pb-4">
         <div className="text-blue-600 text-xl animate-pulse">상태창을 불러오는 중...</div>
       </main>
     );
@@ -94,7 +94,7 @@ export default function Dashboard() {
   if (!user) return null;
 
   return (
-    <main className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 py-8 px-4">
+    <main className="min-h-screen md:min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 py-6 md:py-8 px-4 pb-24 md:pb-8">
       <div className="max-w-4xl mx-auto">
         {/* 헤더 */}
         <div className="text-center mb-8">
