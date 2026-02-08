@@ -2,21 +2,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-
-  /* Neon Colors - Isekai Theme */
-  --neon-cyan: #00f3ff;
-  --neon-magenta: #ff00ff;
-  --neon-gold: #ffd700;
-  --neon-green: #39ff14;
-  --neon-blue: #4d4dff;
-
-  /* Shadows */
-  --glow-cyan: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
-  --glow-magenta:
-    0 0 10px rgba(255, 0, 255, 0.5), 0 0 20px rgba(255, 0, 255, 0.3);
-  --glow-gold: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3);
+  --background: #f8fafc;
+  --foreground: #1e293b;
 }
 
 @theme inline {
@@ -27,31 +14,28 @@
 }
 
 html {
-  background: #0a0a0a;
-  color: #ffffff;
+  background: linear-gradient(to bottom, #ffffff, #eff6ff);
+  color: #1e293b;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
-  background: #0a0a0a;
-  color: #ffffff;
-  font-family: "Share Tech Mono", monospace;
-  min-height: 100vh;
-}
-
-/* Neon Glow Utility Classes */
-.glow-cyan {
-  text-shadow: var(--glow-cyan);
-}
-
-.glow-magenta {
-  text-shadow: var(--glow-magenta);
-}
-
-.glow-gold {
-  text-shadow: var(--glow-gold);
+  background: linear-gradient(to bottom, #ffffff, #eff6ff);
+  color: #1e293b;
+  height: 100%;
+  overflow: auto;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Smooth transitions for mobile nav */
 .nav-transition {
   transition: all 0.3s ease-in-out;
+}
+
+/* iOS safe area for bottom nav */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
 }

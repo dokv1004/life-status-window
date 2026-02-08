@@ -17,26 +17,32 @@ export default function StatusChart({ stats }: StatusChartProps) {
   ];
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={280}>
       <RadarChart data={data}>
-        <PolarGrid stroke="#334155" strokeOpacity={0.3} />
+        <PolarGrid stroke="#e2e8f0" />
         <PolarAngleAxis
           dataKey="stat"
-          tick={{ fill: '#06b6d4', fontSize: 14, fontWeight: 'bold' }}
+          tick={{ fill: '#3b82f6', fontSize: 14, fontWeight: 'bold' }}
         />
         <PolarRadiusAxis
           angle={90}
           domain={[0, 100]}
-          tick={{ fill: '#64748b', fontSize: 12 }}
+          tick={{ fill: '#94a3b8', fontSize: 11 }}
         />
         <Radar
           name="Stats"
           dataKey="value"
-          stroke="#06b6d4"
-          fill="#06b6d4"
-          fillOpacity={0.5}
+          stroke="#8b5cf6"
+          fill="url(#statGradient)"
+          fillOpacity={0.6}
           strokeWidth={2}
         />
+        <defs>
+          <linearGradient id="statGradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="100%" stopColor="#8b5cf6" />
+          </linearGradient>
+        </defs>
       </RadarChart>
     </ResponsiveContainer>
   );

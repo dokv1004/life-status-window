@@ -6,13 +6,28 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import { User } from '@/types/user';
-import StatusChart from '@/components/StatusChart';
-import { Flame, Brain, Heart, Zap, Sparkles, LogOut, Swords } from 'lucide-react';
+import StatusPanel from '@/components/StatusPanel';
+import ActionForm from '@/components/ActionForm';
+import ResultModal from '@/components/ResultModal';
+
+interface ApiResponse {
+  success: boolean;
+  result: {
+    stats: { STR: number; INT: number; VIT: number; DEX: number; LUK: number };
+    comment: string;
+  };
+  stats: { STR: number; INT: number; VIT: number; DEX: number; LUK: number };
+  level: number;
+  exp: number;
+  leveledUp: boolean;
+}
 
 export default function Dashboard() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showResult, setShowResult] = useState(false);
+  const [result, setResult] = useState<ApiResponse | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -49,134 +64,60 @@ export default function Dashboard() {
     return () => unsubscribe();
   }, [router]);
 
-  const handleLogout = async () => {
-    await auth.signOut();
-    router.push('/login');
+  const handleActionResult = (data: ApiResponse) => {
+    setResult(data);
+    setShowResult(true);
+    // 유저 데이터 업데이트
+    if (user) {
+      setUser({
+        ...user,
+        stats: data.stats,
+        level: data.level,
+        exp: data.exp,
+      });
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowResult(false);
+    setResult(null);
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-cyan-400 glow-cyan text-xl animate-pulse">Loading your status...</div>
-      </div>
+      <main className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 flex items-center justify-center p-4">
+        <div className="text-blue-600 text-xl animate-pulse">상태창을 불러오는 중...</div>
+      </main>
     );
   }
 
   if (!user) return null;
 
-  // Calculate EXP percentage based on current level requirement
-  const requiredExp = user.level * 100;
-  const expPercentage = (user.exp / requiredExp) * 100;
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-6 px-4">
-      <div className="max-w-md mx-auto">
-        <div className="bg-slate-800/50 backdrop-blur-sm border border-cyan-500/30 rounded-lg shadow-2xl shadow-cyan-500/20 overflow-hidden">
-          {/* Header */}
-          <div className="bg-linear-to-r from-cyan-900/50 to-purple-900/50 p-4 md:p-6 border-b border-cyan-500/30">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-yellow-400 glow-gold mb-1">
-                  {user.nickname}
-                </h1>
-                <div className="flex items-center gap-2">
-                  <span className="text-purple-300 text-sm">Level</span>
-                  <span className="text-yellow-400 glow-gold font-bold text-xl">{user.level}</span>
-                </div>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="p-2 min-h-11 hover:bg-red-500/20 rounded-lg transition-colors border border-red-500/30"
-                title="Logout"
-              >
-                <LogOut className="w-5 h-5 text-red-400" />
-              </button>
-            </div>
+    <main className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-white to-blue-50 py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* 헤더 */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600">
+            상태창
+          </h1>
+          <p className="text-gray-500 mt-2">당신의 성장을 확인하세요</p>
+        </div>
 
-            {/* EXP Bar */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs text-slate-300">
-                <span>EXP</span>
-                <span>{user.exp} / {requiredExp}</span>
-              </div>
-              <div className="w-full bg-slate-700 rounded-full h-3 overflow-hidden border border-cyan-500/30">
-                <div
-                  className="bg-linear-to-r from-cyan-500 to-blue-500 h-full transition-all duration-300 shadow-lg shadow-cyan-500/50"
-                  style={{ width: `${Math.min(expPercentage, 100)}%` }}
-                />
-              </div>
-            </div>
-          </div>
+        {/* 2열 그리드: 상태창 + 수련 폼 */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* 왼쪽: 상태 패널 */}
+          <StatusPanel user={user} />
 
-          {/* Status Chart */}
-          <div className="p-4 md:p-6 bg-slate-900/30">
-            <h2 className="text-lg font-bold text-cyan-400 glow-cyan mb-4 text-center">
-              STATUS CHART
-            </h2>
-            <div className="w-full">
-              <StatusChart stats={user.stats} />
-            </div>
-          </div>
-
-          {/* Stats List */}
-          <div className="p-4 md:p-6 space-y-3 bg-slate-800/30">
-            <h2 className="text-lg font-bold text-cyan-400 glow-cyan mb-4">
-              STATS
-            </h2>
-
-            <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-red-500/20 min-h-11">
-              <div className="flex items-center gap-3">
-                <Flame className="w-5 h-5 text-red-400" />
-                <span className="text-slate-200 font-medium">STR</span>
-              </div>
-              <span className="text-white font-bold text-lg">{user.stats.STR}</span>
-            </div>
-
-            <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-blue-500/20 min-h-11">
-              <div className="flex items-center gap-3">
-                <Brain className="w-5 h-5 text-blue-400" />
-                <span className="text-slate-200 font-medium">INT</span>
-              </div>
-              <span className="text-white font-bold text-lg">{user.stats.INT}</span>
-            </div>
-
-            <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-green-500/20 min-h-11">
-              <div className="flex items-center gap-3">
-                <Heart className="w-5 h-5 text-green-400" />
-                <span className="text-slate-200 font-medium">VIT</span>
-              </div>
-              <span className="text-white font-bold text-lg">{user.stats.VIT}</span>
-            </div>
-
-            <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-yellow-500/20 min-h-11">
-              <div className="flex items-center gap-3">
-                <Zap className="w-5 h-5 text-yellow-400" />
-                <span className="text-slate-200 font-medium">DEX</span>
-              </div>
-              <span className="text-white font-bold text-lg">{user.stats.DEX}</span>
-            </div>
-
-            <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-purple-500/20 min-h-11">
-              <div className="flex items-center gap-3">
-                <Sparkles className="w-5 h-5 text-purple-400" />
-                <span className="text-slate-200 font-medium">LUK</span>
-              </div>
-              <span className="text-white font-bold text-lg">{user.stats.LUK}</span>
-            </div>
-          </div>
-
-          {/* Action Button */}
-          <div className="p-4 md:p-6 pt-0 bg-slate-800/30">
-            <button
-              onClick={() => router.push('/action')}
-              className="w-full py-3 min-h-11 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold rounded-lg shadow-lg shadow-purple-500/50 transition-all flex items-center justify-center gap-2"
-            >
-              <Swords className="w-5 h-5" />
-              수련하러 가기
-            </button>
-          </div>
+          {/* 오른쪽: 수련 폼 */}
+          <ActionForm uid={user.uid} onResult={handleActionResult} />
         </div>
       </div>
-    </div>
+
+      {/* 결과 모달 */}
+      {showResult && result && (
+        <ResultModal result={result} onClose={handleCloseModal} />
+      )}
+    </main>
   );
 }
