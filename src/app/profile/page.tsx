@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import { User, FriendRequest } from '@/types/user';
@@ -168,10 +168,35 @@ export default function ProfilePage() {
   const handleUpdateNickname = async () => {
     if (!user || !nicknameInput.trim()) return;
 
+    const newNickname = nicknameInput.trim();
+
     try {
+      // 1. Firestore 유저 문서 업데이트
       const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { nickname: nicknameInput.trim() });
-      setUser({ ...user, nickname: nicknameInput.trim() });
+      await updateDoc(userRef, { nickname: newNickname });
+
+      // 2. Firebase Auth displayName 업데이트 (navbar 동기화)
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, { displayName: newNickname });
+      }
+
+      // 3. 친구들의 friends 배열에서 내 닉네임 업데이트
+      const friends = user.friends || [];
+      const updatePromises = friends.map(async (friend) => {
+        const friendRef = doc(db, 'users', friend.uid);
+        const friendSnap = await getDoc(friendRef);
+        if (friendSnap.exists()) {
+          const friendData = friendSnap.data();
+          const friendFriends = friendData.friends || [];
+          const updatedFriends = friendFriends.map((f: { uid: string; nickname: string }) =>
+            f.uid === user.uid ? { ...f, nickname: newNickname } : f
+          );
+          await updateDoc(friendRef, { friends: updatedFriends });
+        }
+      });
+      await Promise.all(updatePromises);
+
+      setUser({ ...user, nickname: newNickname });
       setIsEditingNickname(false);
     } catch (error) {
       console.error('Update nickname error:', error);
