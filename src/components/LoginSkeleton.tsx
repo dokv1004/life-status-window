@@ -16,16 +16,16 @@ export default function LoginSkeleton() {
 
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden">
         <div className="p-8 space-y-4 flex flex-col items-center">
-          <div className="h-8 w-40 bg-gray-200 rounded animate-pulse" />
-          <div className="h-4 w-64 bg-gray-200 rounded animate-pulse" />
-          <div className="h-4 w-48 bg-gray-200 rounded animate-pulse" />
+          <div className="h-8 w-40 bg-gray-100 rounded animate-pulse" />
+          <div className="h-4 w-64 bg-gray-100 rounded animate-pulse" />
+          <div className="h-4 w-48 bg-gray-100 rounded animate-pulse" />
         </div>
         <div className="px-8 pb-8">
-          <div className="h-12 w-full bg-gray-200 rounded-lg animate-pulse" />
+          <div className="h-12 w-full bg-gray-100 rounded-lg animate-pulse" />
         </div>
       </div>
 
-      <div className="mt-6 h-3 w-56 bg-gray-200 rounded animate-pulse" />
+      <div className="mt-6 h-3 w-56 bg-gray-100 rounded animate-pulse" />
     </main>
   );
 }
