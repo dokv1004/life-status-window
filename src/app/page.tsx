@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
-import { Sparkles, ArrowUp } from 'lucide-react';
+import { Sparkles, ArrowUp, ArrowDown } from 'lucide-react';
 
 export default function Home() {
   const { user, loading } = useAuth();
@@ -51,8 +51,10 @@ export default function Home() {
 
       {/* 안내 메시지 */}
       <div className="mt-16 flex flex-col items-center gap-2 text-gray-400 animate-bounce">
-        <ArrowUp size={24} />
-        <p className="text-sm font-medium">상단 메뉴를 눌러 시작하세요</p>
+        <ArrowDown size={24} className="md:hidden" />
+        <ArrowUp size={24} className="hidden md:block" />
+        <p className="text-sm font-medium md:hidden">하단 메뉴를 눌러 시작하세요</p>
+        <p className="text-sm font-medium hidden md:block">상단 메뉴를 눌러 시작하세요</p>
       </div>
     </main>
   );
