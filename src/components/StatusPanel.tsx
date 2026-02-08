@@ -53,7 +53,7 @@ export default function StatusPanel({ user }: StatusPanelProps) {
       </div>
 
       {/* 레이더 차트 */}
-      <div className="p-6 bg-gray-50/50">
+      <div className="p-6 bg-gray-50/50 isolate">
         <h3 className="text-sm font-semibold text-gray-600 mb-4 text-center">STATUS CHART</h3>
         <StatusChart stats={user.stats} />
       </div>
