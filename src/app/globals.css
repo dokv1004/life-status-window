@@ -39,3 +39,13 @@ body {
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);
 }
+
+/* Fix for mobile bottom nav stability - GPU acceleration prevents layout shift during scroll */
+nav[class*="fixed"][class*="bottom-0"] {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+  position: fixed !important;
+}
