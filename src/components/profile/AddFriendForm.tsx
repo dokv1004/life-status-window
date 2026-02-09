@@ -53,13 +53,13 @@ export default function AddFriendForm({ uid, onSuccess }: AddFriendFormProps) {
         <UserPlus size={20} className="text-blue-500" />
         친구 추가
       </h3>
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-hidden">
         <input
           type="text"
           value={friendCodeInput}
           onChange={(e) => setFriendCodeInput(e.target.value.toUpperCase())}
           placeholder="친구 코드 입력"
-          className="flex-1 min-w-0 px-4 py-2.5 border border-gray-300 rounded-lg font-mono uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 min-w-0 px-4 py-2.5 border border-gray-300 rounded-lg font-mono text-base uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500"
           maxLength={6}
         />
         <button
