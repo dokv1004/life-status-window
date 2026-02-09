@@ -6,29 +6,18 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import { User } from '@/types/user';
+import { ActionApiResponse } from '@/types/api';
 import StatusPanel from '@/components/StatusPanel';
 import ActionForm from '@/components/ActionForm';
 import ResultModal from '@/components/ResultModal';
 import DashboardSkeleton from '@/components/DashboardSkeleton';
-
-interface ApiResponse {
-  success: boolean;
-  result: {
-    stats: { STR: number; INT: number; VIT: number; DEX: number; LUK: number };
-    comment: string;
-  };
-  stats: { STR: number; INT: number; VIT: number; DEX: number; LUK: number };
-  level: number;
-  exp: number;
-  leveledUp: boolean;
-}
 
 export default function Dashboard() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [showResult, setShowResult] = useState(false);
-  const [result, setResult] = useState<ApiResponse | null>(null);
+  const [result, setResult] = useState<ActionApiResponse | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -65,7 +54,7 @@ export default function Dashboard() {
     return () => unsubscribe();
   }, [router]);
 
-  const handleActionResult = (data: ApiResponse) => {
+  const handleActionResult = (data: ActionApiResponse) => {
     setResult(data);
     setShowResult(true);
     // 유저 데이터 업데이트

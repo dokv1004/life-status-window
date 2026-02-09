@@ -2,36 +2,11 @@
 
 import { useState } from 'react';
 import { Loader2, Send } from 'lucide-react';
-
-interface ActionResult {
-  stats: {
-    STR: number;
-    INT: number;
-    VIT: number;
-    DEX: number;
-    LUK: number;
-  };
-  comment: string;
-}
-
-interface ApiResponse {
-  success: boolean;
-  result: ActionResult;
-  stats: {
-    STR: number;
-    INT: number;
-    VIT: number;
-    DEX: number;
-    LUK: number;
-  };
-  level: number;
-  exp: number;
-  leveledUp: boolean;
-}
+import { ActionApiResponse } from '@/types/api';
 
 interface ActionFormProps {
   uid: string;
-  onResult: (result: ApiResponse) => void;
+  onResult: (result: ActionApiResponse) => void;
 }
 
 export default function ActionForm({ uid, onResult }: ActionFormProps) {

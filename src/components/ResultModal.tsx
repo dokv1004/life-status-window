@@ -3,35 +3,10 @@
 import { useEffect } from 'react';
 import { Flame, Brain, Heart, Zap, Sparkles, X, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
-
-interface ActionResult {
-  stats: {
-    STR: number;
-    INT: number;
-    VIT: number;
-    DEX: number;
-    LUK: number;
-  };
-  comment: string;
-}
-
-interface ApiResponse {
-  success: boolean;
-  result: ActionResult;
-  stats: {
-    STR: number;
-    INT: number;
-    VIT: number;
-    DEX: number;
-    LUK: number;
-  };
-  level: number;
-  exp: number;
-  leveledUp: boolean;
-}
+import { ActionApiResponse } from '@/types/api';
 
 interface ResultModalProps {
-  result: ApiResponse;
+  result: ActionApiResponse;
   onClose: () => void;
 }
 
