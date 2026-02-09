@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
-import { User } from '@/types/user';
-import { ActionApiResponse } from '@/types/api';
-import StatusPanel from '@/components/StatusPanel';
-import ActionForm from '@/components/ActionForm';
-import ResultModal from '@/components/ResultModal';
-import DashboardSkeleton from '@/components/DashboardSkeleton';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+import { User } from "@/types/user";
+import { ActionApiResponse } from "@/types/api";
+import StatusPanel from "@/components/StatusPanel";
+import ActionForm from "@/components/ActionForm";
+import ResultModal from "@/components/ResultModal";
+import DashboardSkeleton from "@/components/DashboardSkeleton";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -22,11 +22,11 @@ export default function Dashboard() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (!firebaseUser) {
-        router.push('/login');
+        router.push("/login");
         return;
       }
 
-      const userRef = doc(db, 'users', firebaseUser.uid);
+      const userRef = doc(db, "users", firebaseUser.uid);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
@@ -34,7 +34,7 @@ export default function Dashboard() {
       } else {
         const defaultUser: User = {
           uid: firebaseUser.uid,
-          nickname: firebaseUser.displayName || 'Adventurer',
+          nickname: firebaseUser.displayName || "Adventurer",
           level: 1,
           exp: 0,
           stats: {
@@ -90,12 +90,12 @@ export default function Dashboard() {
           <p className="text-gray-500 mt-2">당신의 성장을 확인하세요</p>
         </div>
 
-        {/* 2열 그리드: 상태창 + 수련 폼 */}
+        {/* 2열 그리드: 상태창 + 퀘스트 폼 */}
         <div className="grid md:grid-cols-2 gap-6">
           {/* 왼쪽: 상태 패널 */}
           <StatusPanel user={user} />
 
-          {/* 오른쪽: 수련 폼 */}
+          {/* 오른쪽: 퀘스트 폼 */}
           <ActionForm uid={user.uid} onResult={handleActionResult} />
         </div>
       </div>

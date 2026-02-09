@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Loader2, Send } from 'lucide-react';
-import { ActionApiResponse } from '@/types/api';
+import { useState } from "react";
+import { Loader2, Send } from "lucide-react";
+import { ActionApiResponse } from "@/types/api";
 
 interface ActionFormProps {
   uid: string;
@@ -10,7 +10,7 @@ interface ActionFormProps {
 }
 
 export default function ActionForm({ uid, onResult }: ActionFormProps) {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -19,20 +19,20 @@ export default function ActionForm({ uid, onResult }: ActionFormProps) {
 
     setLoading(true);
     try {
-      const response = await fetch('/api/action', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/action", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content, uid }),
       });
 
       const data = await response.json();
       if (data.success) {
         onResult(data);
-        setContent('');
+        setContent("");
       }
     } catch (error) {
-      console.error('Failed to submit action:', error);
-      alert('행동 분석에 실패했습니다. 다시 시도해주세요.');
+      console.error("Failed to submit action:", error);
+      alert("행동 분석에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ export default function ActionForm({ uid, onResult }: ActionFormProps) {
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
       <div className="p-6 border-b border-gray-100 bg-linear-to-r from-blue-50 to-blue-100">
-        <h3 className="text-lg font-bold text-gray-800">수련 기록</h3>
+        <h3 className="text-lg font-bold text-gray-800">퀘스트 등록</h3>
         <p className="text-gray-500 text-sm mt-1">
           오늘 한 행동을 기록하면 AI가 스탯으로 변환해드려요
         </p>
@@ -69,7 +69,7 @@ export default function ActionForm({ uid, onResult }: ActionFormProps) {
           ) : (
             <>
               <Send className="w-5 h-5" />
-              수련 보고하기
+              퀘스트 보고하기
             </>
           )}
         </button>
